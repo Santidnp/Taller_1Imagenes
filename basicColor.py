@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 import sys
 import os
 class basicColor():
@@ -19,8 +20,14 @@ class basicColor():
         ret, imgOstu = cv2.threshold(image_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         cv2.imshow("Image", imgOstu)
         cv2.waitKey(0)
-    def colorize(self,h):
-        
+    def colorize(self,hue):
+        image_hsv = cv2.cvtColor(self.image, cv2.COLOR_BGR2HSV)
+        h, s, v = cv2.split(image_hsv)
+        h = hue*np.ones_like(h)
+        image_hue = cv2.merge((h,s,v))
+        image_hue_bgr = cv2.cvtColor(image_hue, cv2.COLOR_HSV2BGR)
+        cv2.imshow("Image", image_hue_bgr)
+        cv2.waitKey(0)
 
 
 
@@ -28,6 +35,6 @@ class basicColor():
 
 
 
-imagen_1 = basicColor(r'C:\Users\sngh9\OneDrive\Escritorio\Maestria_Semestre_2\Procesamiento_de_imagenes\Taller_1\cat.png')
-imagen_1.displayProperties()
-imagen_1.makeBW()
+
+
+
